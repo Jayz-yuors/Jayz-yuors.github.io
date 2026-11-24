@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jay Keluskar | AI/ML & Software Engineer</title>
+<meta name="description" content="Portfolio of Jay Keluskar, Computer Engineering student building AI/ML and full-stack systems.">
+<link rel="icon" href="JayKeluskarProfile.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="loader"><div class="ring"></div><p>Initialising Jay.exe</p></div>
+<div id="progress"></div>
+<div id="glow"></div>
+<canvas id="net" aria-hidden="true"></canvas>
+
+<header id="nav">
+  <a class="logo" href="#home">JK</a>
+  <button id="burger" aria-label="Menu">&#9776;</button>
+  <nav id="links">
+    <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a>
+    <a href="#journey">Journey</a><a href="#writing">Writing</a><a href="#contact">Contact</a>
+    <a class="btn small" href="Nov_2026_JayK_CV.pdf" target="_blank" rel="noopener">Resume</a>
+  </nav>
+</header>
+
+<main>
+<section id="home" class="hero">
+  <div class="hero-text">
+    <p class="hello">Hi, I'm</p>
+    <h1>Jay Keluskar</h1>
+    <h2><span id="typed"></span><i class="caret"></i></h2>
+    <p class="lead">Computer Engineering student at VIT Mumbai. I build predictive ML pipelines, privacy-preserving learning systems and security-aware full-stack products.</p>
+    <div class="cta">
+      <a class="btn" href="#projects">View projects</a>
+      <a class="btn ghost" href="Nov_2026_JayK_CV.pdf" download>Download CV</a>
+    </div>
+    <div class="socials">
+      <a href="https://github.com/Jayz-yuors" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/jay-keluskar-b17601358/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:jaykeluskar106@gmail.com">Email</a>
+    </div>
+  </div>
+  <div class="hero-photo tilt">
+    <div class="halo"></div>
+    <img src="JayKeluskarProfile.jpeg" alt="Portrait of Jay Keluskar">
+  </div>
+</section>
+
+<section id="about" class="reveal">
+  <h3 class="title">About me</h3>
+  <div class="about">
+    <p>I'm a third-year student with a CGPA of 9.7/10 who likes taking an idea all the way from dataset to deployed dashboard. My work spans federated learning, reinforcement learning, computer vision and fintech analytics, and I'm currently looking for AI/ML or software engineering internships.</p>
+    <div class="stats">
+      <div><b data-count="9.7" data-dec="1">0</b><span>CGPA out of 10</span></div>
+      <div><b data-count="1" data-pre="Top ">0</b><span>% in NPTEL Java Elite</span></div>
+      <div><b data-count="7" data-suf="+">0</b><span>flagship projects</span></div>
+      <div><b data-count="235" data-suf="K+">0</b><span>regime records processed</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="reveal">
+  <h3 class="title">Skills</h3>
+  <div id="skillGrid" class="skill-grid"></div>
+</section>
+
+<section id="projects" class="reveal">
+  <h3 class="title">Projects</h3>
+  <div id="filters" class="filters"></div>
+  <div id="projectGrid" class="grid"></div>
+</section>
+
+<section id="journey" class="reveal">
+  <h3 class="title">Journey</h3>
+  <div id="timeline" class="timeline"></div>
+</section>
+
+<section id="writing" class="reveal">
+  <h3 class="title">Writing</h3>
+  <div id="writeGrid" class="grid two"></div>
+</section>
+
+<section id="contact" class="reveal">
+  <h3 class="title">Let's build something</h3>
+  <p class="lead center">Open to AI/ML and software engineering internships. The fastest way to reach me is email.</p>
+  <div class="cta center">
+    <a class="btn" href="mailto:jaykeluskar106@gmail.com">jaykeluskar106@gmail.com</a>
+    <a class="btn ghost" href="https://www.linkedin.com/in/jay-keluskar-b17601358/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn ghost" href="https://github.com/Jayz-yuors" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</section>
+</main>
+
+<footer><p>&copy; 2026 Jay Keluskar. Mumbai, India.</p><a href="#home" id="top">Back to top</a></footer>
+<script src="script.js"></script>
+</body>
+</html>
