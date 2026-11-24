@@ -1,414 +1,365 @@
 /* =========================================================
-   JAY KELUSKAR — PORTFOLIO CONTENT + INTERACTIONS
-   Edit project/skill/credential arrays here when updating.
+   JAY KELUSKAR — EDITORIAL TECH PORTFOLIO
+   Palette: graphite / electric lime / ultraviolet
    ========================================================= */
-const GITHUB = "https://github.com/Jayz-yuors";
+:root {
+  --bg: #090b0d;
+  --bg-soft: #101316;
+  --panel: #14191c;
+  --panel-2: #1a2023;
+  --line: rgba(235, 244, 232, .13);
+  --line-strong: rgba(235, 244, 232, .25);
+  --text: #f0f2e9;
+  --muted: #a0aaa4;
+  --dim: #65716c;
+  --lime: #c6f36a;
+  --lime-dark: #a8d84b;
+  --violet: #9d85ff;
+  --orange: #ff805f;
+  --display: "Syne", "Space Grotesk", sans-serif;
+  --body: "DM Sans", sans-serif;
+  --mono: "DM Mono", monospace;
+  --max: 1240px;
+  --gutter: clamp(22px, 6vw, 92px);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+body { background: var(--bg); color: var(--text); font: 400 16px/1.65 var(--body); overflow-x: hidden; }
+body.menu-open { overflow: hidden; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+::selection { background: var(--lime); color: var(--bg); }
+:focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; }
+.noise { position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: .035; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E"); }
+#particle-field { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: .48; }
+.cursor-aura { position: fixed; z-index: 0; width: 360px; height: 360px; border-radius: 50%; pointer-events: none; background: radial-gradient(circle, rgba(198,243,106,.065), transparent 68%); transform: translate(-50%,-50%); left: 50%; top: 30%; }
+.scroll-progress { position: fixed; z-index: 100; top: 0; left: 0; height: 3px; width: 0; background: linear-gradient(90deg,var(--lime),var(--violet),var(--orange)); }
+.preloader { position: fixed; inset: 0; z-index: 200; background: var(--bg); display: grid; align-content: center; justify-items: center; gap: 18px; transition: opacity .65s, visibility .65s; }
+.preloader.done { opacity: 0; visibility: hidden; }
+.preloader-mark { font: 800 56px/1 var(--display); letter-spacing: -.1em; }
+.preloader-mark span { color: var(--lime); }
+.preloader-track { width: 150px; height: 2px; background: #27302c; overflow: hidden; }
+.preloader-track span { display: block; height: 100%; width: 100%; background: var(--lime); transform: translateX(-100%); animation: loadbar 1s ease forwards; }
+.preloader p { color: var(--dim); font: 9px var(--mono); letter-spacing: .2em; }
+@keyframes loadbar { to { transform: translateX(0); } }
 
-const roles = [
-  "AI / ML SYSTEMS",
-  "FULL-STACK PRODUCTS",
-  "PRIVACY-AWARE AI",
-  "COMPUTER VISION"
-];
+.site-header { height: 82px; padding: 0 var(--gutter); position: fixed; inset: 0 0 auto; z-index: 90; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid transparent; transition: background .3s,border-color .3s,backdrop-filter .3s; }
+.site-header.scrolled { background: rgba(9,11,13,.82); backdrop-filter: blur(18px); border-color: var(--line); }
+.brand { font: 800 25px/1 var(--display); letter-spacing: -.12em; }
+.brand span { color: var(--lime); }
+.brand i { color: var(--orange); font-style: normal; }
+.nav-links { display: flex; align-items: center; gap: clamp(18px,2.7vw,38px); }
+.nav-links a { color: var(--muted); font: 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; transition: color .2s; }
+.nav-links a:hover { color: var(--lime); }
+.nav-links .nav-resume { color: var(--lime); border: 1px solid rgba(198,243,106,.45); padding: 11px 15px; border-radius: 3px; }
+.nav-resume span { margin-left: 9px; }
+.menu-toggle { display: none; background: none; border: 0; width: 40px; height: 40px; cursor: pointer; }
+.menu-toggle span { display: block; width: 24px; height: 1px; margin: 6px auto; background: var(--text); transition: transform .25s; }
 
-const projects = [
-  {
-    name: "SentinelAI",
-    category: ["ai", "fullstack"],
-    label: "SECURITY · CI/CD",
-    date: "2026 — PRESENT",
-    featured: true,
-    description: "An AI-powered, security-aware CI/CD platform that connects repository analysis with code intelligence and remediation workflows.",
-    points: [
-      "Engineered an end-to-end orchestration pipeline linking repository analysis, AI-assisted code review, security analysis, risk assessment, remediation and verification.",
-      "Built a multi-service workflow with failure handling, AI-provider fallback and structured evidence logging for traceable execution outcomes.",
-      "Automated the remediation-to-GitHub flow (branches, commits and pull requests); security validation and production hardening are in progress."
-    ],
-    stack: "React · Spring Boot · FastAPI · PostgreSQL · Neo4j"
-  },
-  {
-    name: "QuantCopilot AI",
-    category: ["ai", "fullstack"],
-    label: "FINTECH · MARKET INTELLIGENCE",
-    date: "2026 — PRESENT",
-    featured: true,
-    description: "A quantitative market intelligence platform combining technical indicators, ML market-regime classification and automated reporting.",
-    points: [
-      "Built a full-stack platform analysing 42 assets across US technology, Indian IT and pharma, ETFs, commodities, volatility and indices.",
-      "Trained a Bull / Bear / High Volatility market-regime classifier and automated daily AI market-intelligence reports using N8N and Gemini.",
-      "Delivered a React and Recharts dashboard over FastAPI and PostgreSQL handling 117K+ price, 117K+ indicator and 235K+ regime records; portfolio analysis, risk scoring and diversification modules are being extended."
-    ],
-    stack: "Python · FastAPI · React · PostgreSQL · ML · N8N · Gemini"
-  },
-  {
-    name: "TrustFed",
-    category: ["ai"],
-    label: "FEDERATED LEARNING · FRAUD",
-    date: "2026",
-    description: "Decentralized financial fraud intelligence across mobile money, digital lending and insurance claims datasets.",
-    points: [
-      "Designed collaborative fraud detection using PaySim, Home Credit Default Risk and claims datasets.",
-      "Explored SecAgg+ multi-party aggregation and differential privacy to collaborate without pooling raw customer records.",
-      "Integrated ONNX Runtime FP16 inference for low-latency screening and TreeSHAP attributions with Gemini-assisted audit rationales.",
-      "Reached the Final Round of ENIGMA 5.0 — GENESIS (PPT screening, then offline hackathon)."
-    ],
-    stack: "Federated Learning · ONNX Runtime · TreeSHAP · Differential Privacy"
-  },
-  {
-    name: "Geospatial AI/ML — Urban Heat",
-    category: ["ai"],
-    label: "GEO-SPATIAL ML · TEAM PROJECT",
-    date: "2026 — PRESENT",
-    description: "A geospatial machine learning system to predict Landsat land-surface temperature and identify urban heat drivers.",
-    points: [
-      "Built a 46-factor dataset spanning vegetation, built-up areas, land cover, terrain, climate and population in Google Earth Engine.",
-      "Designed region-wise North / South / East / West pipelines comparing Linear Regression, Decision Tree, Random Forest, LightGBM and XGBoost with city-held-out validation.",
-      "Implemented new-city inference from coordinates to region to nearest environmentally similar city and regional model; approximately 80–85% of data engineering and Model-1 pipeline complete."
-    ],
-    stack: "Python · Google Earth Engine · XGBoost · LightGBM"
-  },
-  {
-    name: "Rocket Landing Optimization",
-    category: ["ai", "vision"],
-    label: "REINFORCEMENT LEARNING",
-    date: "2026 — PRESENT",
-    description: "An experimental reinforcement learning pipeline for autonomous landing behaviour in Gymnasium's LunarLander-v3 environment.",
-    points: [
-      "Working with an 8-dimensional observation space and four discrete actions.",
-      "Exploring reward shaping and episode-based training.",
-      "Building episode logging and replay workflows to analyse trajectories and landing outcomes."
-    ],
-    stack: "Python · Gymnasium · Stable-Baselines3 · PyTorch"
-  },
-  {
-    name: "TruthLens",
-    category: ["ai"],
-    label: "NLP · INFORMATION VERIFICATION",
-    date: "2026",
-    description: "A hybrid fake-news detection and verification system that combines a learned classifier with live evidence retrieval.",
-    points: [
-      "Engineered an LSTM classifier with N8N automation and NewsAPI live evidence retrieval.",
-      "Pipeline performs text preprocessing, LSTM inference, live evidence cross-checking and returns a verdict with a confidence score."
-    ],
-    stack: "LSTM · NLP · N8N · NewsAPI"
-  },
-  {
-    name: "Football Analytics System",
-    category: ["vision"],
-    label: "COMPUTER VISION",
-    date: "2026",
-    description: "A football video highlights analyser that extracts tactical context and player movement visualisations.",
-    points: [
-      "Produces player heatmaps and minimap tactical views.",
-      "Uses contour detection, optical flow and homography for video analysis."
-    ],
-    stack: "OpenCV · YOLO · Video Analysis"
-  },
-  {
-    name: "Football Match Outcome Prediction",
-    category: ["ai"],
-    label: "CLASSIFICATION",
-    date: "ADDITIONAL PROJECT",
-    description: "Classification model using team statistics, form and venue, with data cleaning, feature engineering and evaluation using accuracy and F1-score.",
-    stack: "Python · Scikit-learn"
-  },
-  {
-    name: "Space Domain Analytics",
-    category: ["ai"],
-    label: "NASA OPEN APIs",
-    date: "ADDITIONAL PROJECT",
-    description: "Consumed NASA Open APIs — NeoWs, APOD and Earth — for trend analysis and visualisation.",
-    stack: "Python · NASA Open APIs · Matplotlib · Seaborn"
-  },
-  {
-    name: "Crop Yield Prediction",
-    category: ["ai"],
-    label: "REGRESSION · 1M+ SAMPLES",
-    date: "ADDITIONAL PROJECT",
-    description: "Regression on a 1,000,000-sample dataset; compared 12 weather-segmented models with a unified model across R², MAE and RMSE.",
-    stack: "Python · Scikit-learn · Linear Regression · Decision Tree · Random Forest · XGBoost"
-  },
-  {
-    name: "Customer Churn Prediction Pipeline",
-    category: ["ai"],
-    label: "ML PIPELINE",
-    date: "ADDITIONAL PROJECT",
-    description: "Temporal feature engineering, SMOTE for class imbalance, feature selection and hyperparameter tuning across Logistic Regression, Random Forest and XGBoost.",
-    stack: "Python · Logistic Regression · Random Forest · XGBoost · SMOTE"
-  },
-  {
-    name: "Stock Insights Analysis System",
-    category: ["ai", "fullstack"],
-    label: "FULL-STACK · FINANCIAL ANALYTICS",
-    date: "ADDITIONAL PROJECT",
-    description: "A full-stack dashboard for volatility analysis, risk scoring and benchmarking of Indian listed companies with automated Python–MySQL data refresh.",
-    stack: "Python · MySQL · Dashboard"
-  },
-  {
-    name: "Foundations — Earlier Projects",
-    category: ["foundations"],
-    label: "PROGRAMMING FOUNDATIONS",
-    date: "EARLIER WORK",
-    description: "Java AWT/Swing Poster Generator, Scientific Calculator in Python, and a C data-structures lab covering stacks, queues, linked lists, trees and graphs.",
-    stack: "Java AWT/Swing · Python · C · Data Structures"
-  }
-];
+.section-wrap { width: min(100% - var(--gutter)*2, var(--max)); margin-inline: auto; position: relative; }
+.hero { min-height: 790px; min-height: min(900px,100svh); padding-top: 140px; display: flex; flex-direction: column; justify-content: space-between; }
+.hero-topline { display: flex; justify-content: space-between; align-items: center; color: var(--dim); font: 10px var(--mono); letter-spacing: .14em; }
+.eyebrow { font: 10px var(--mono); letter-spacing: .16em; color: var(--muted); }
+.status-dot { display: inline-block; width: 7px; height: 7px; background: var(--lime); border-radius: 50%; margin-right: 9px; box-shadow: 0 0 12px rgba(198,243,106,.8); }
+.hero-layout { display: grid; grid-template-columns: 1.2fr .8fr; align-items: center; gap: 40px; padding: 52px 0 35px; }
+.hero-copy { position: relative; z-index: 2; }
+.hero-kicker { font: 11px var(--mono); color: var(--lime); letter-spacing: .2em; margin-bottom: 18px; }
+.hero-name { font: 800 clamp(74px,11.4vw,158px)/.79 var(--display); letter-spacing: -.095em; }
+.hero-name > span { display: block; }
+.name-second { color: var(--text); }
+.lime-dot { color: var(--lime); }
+.role-line { display: flex; align-items: center; gap: 12px; min-height: 42px; margin: 28px 0 15px; font: 600 clamp(14px,1.6vw,19px) var(--display); }
+.role-prefix { font: 10px var(--mono); letter-spacing: .18em; color: var(--dim); }
+#typedRole { color: var(--lime); }
+.type-caret { color: var(--lime); animation: blink .8s steps(2,start) infinite; }
+@keyframes blink { to { visibility: hidden; } }
+.hero-description { max-width: 540px; color: var(--muted); font-size: 15px; line-height: 1.85; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.button { display: inline-flex; align-items: center; gap: 28px; padding: 14px 18px; font: 11px var(--mono); letter-spacing: .04em; transition: transform .25s,background .25s,border-color .25s; }
+.button:hover { transform: translateY(-4px); }
+.button-primary { color: #11150d; background: var(--lime); border: 1px solid var(--lime); }
+.button-primary:hover { background: #d7ff82; box-shadow: 0 12px 36px rgba(198,243,106,.14); }
+.button-outline { border: 1px solid var(--line-strong); color: var(--text); }
+.button-outline:hover { border-color: var(--lime); color: var(--lime); }
+.hero-socials { display: flex; flex-wrap: wrap; gap: 25px; margin-top: 35px; }
+.hero-socials a { color: var(--dim); font: 9px var(--mono); letter-spacing: .13em; transition: color .2s; }
+.hero-socials a span { color: var(--lime); margin-left: 4px; }
+.hero-socials a:hover { color: var(--text); }
+.hero-visual { min-height: 430px; position: relative; display: grid; place-items: center; isolation: isolate; }
+.portrait-frame { width: min(320px,72%); aspect-ratio: .79; padding: 11px; position: relative; z-index: 2; background: linear-gradient(145deg,#c6f36a,#8d78e9 52%,#ff805f); transform: rotate(3deg); box-shadow: 22px 25px 0 rgba(198,243,106,.08); }
+.portrait-frame::before { content: ""; position: absolute; inset: 1px; background: var(--bg); z-index: -1; }
+.portrait { width: 100%; height: calc(100% - 37px); object-fit: cover; object-position: 50% 20%; filter: saturate(.8) contrast(1.04); display: block; }
+.portrait-topline,.portrait-bottomline { height: 18px; display: flex; align-items: center; justify-content: space-between; font: 8px var(--mono); letter-spacing: .12em; color: var(--bg); }
+.portrait-bottomline { color: var(--text); }
+.visual-orbit { position: absolute; border: 1px solid rgba(198,243,106,.24); border-radius: 50%; z-index: 0; }
+.orbit-one { width: 440px; height: 180px; transform: rotate(-36deg); }
+.orbit-two { width: 390px; height: 330px; transform: rotate(42deg); border-color: rgba(157,133,255,.24); }
+.visual-cross { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 22px var(--lime); }
+.cross-one { top: 17%; right: 12%; }
+.cross-two { bottom: 18%; left: 12%; background: var(--orange); box-shadow: 0 0 22px var(--orange); }
+.orbit-label { position: absolute; font: 9px/1.5 var(--mono); letter-spacing: .13em; color: var(--muted); }
+.orbit-label-a { top: 16%; left: 2%; }
+.orbit-label-b { bottom: 16%; right: 0; text-align: right; }
+.visual-stamp { position: absolute; right: 0; top: 5%; display: flex; align-items: center; gap: 9px; transform: rotate(8deg); }
+.visual-stamp span { width: 44px; height: 44px; border: 1px solid var(--lime); border-radius: 50%; display: grid; place-items: center; color: var(--lime); font: 700 13px var(--display); }
+.visual-stamp small { color: var(--dim); font: 8px/1.4 var(--mono); letter-spacing: .1em; }
+.hero-bottom { display: flex; align-items: center; gap: 14px; padding: 25px 0 28px; color: var(--dim); font: 9px var(--mono); letter-spacing: .15em; }
+.scroll-line { width: 72px; height: 1px; background: linear-gradient(90deg,var(--lime),transparent); }
+.hero-bottom-note { margin-left: auto; }
 
-const skills = {
-  "Languages": ["Python", "Java — OOP, Swing/AWT, Multithreading", "C", "SQL", "MySQL", "HTML", "CSS"],
-  "ML / AI": ["Supervised Learning", "Federated Learning", "Differential Privacy", "Reinforcement Learning — reward shaping", "NLP — LSTM", "Explainable AI — TreeSHAP", "Feature Engineering", "Model Evaluation & Tuning", "Computer Vision"],
-  "Frameworks & Libraries": ["PyTorch", "Scikit-learn", "XGBoost", "LightGBM", "Stable-Baselines3", "Gymnasium", "ONNX Runtime", "OpenCV", "NumPy", "Pandas", "Matplotlib", "Seaborn"],
-  "Backend & Data": ["Spring Boot", "FastAPI", "React", "REST APIs", "PostgreSQL", "Neo4j", "MySQL", "SQLite"],
-  "Tools & Platforms": ["Git", "GitHub", "N8N", "Google Earth Engine", "NASA Open APIs", "NewsAPI", "Gemini API", "Jupyter", "VS Code", "PyCharm"]
-};
+.ticker { overflow: hidden; border-block: 1px solid var(--line); background: var(--lime); color: var(--bg); transform: rotate(-1.1deg) scale(1.02); margin: 25px 0 100px; }
+.ticker-track { width: max-content; display: flex; align-items: center; gap: 25px; padding: 13px 0; animation: marquee 35s linear infinite; font: 800 13px var(--display); letter-spacing: .09em; }
+.ticker-track b { font-size: 17px; color: #687c39; }
+@keyframes marquee { to { transform: translateX(-50%); } }
 
-const journey = [
-  ["SEP 2024 — PRESENT", "B.Tech, Computer Engineering", "Vidyalankar Institute of Technology — University of Mumbai. Overall CGPA 9.7/10; semester progression: 9.61 (Sem 1 & 2), 9.70 (Sem 3), 9.86 (Sem 4)."],
-  ["NOV 2026", "NASA Open Science Essentials", "Certificate of Achievement from NASA; training in open science principles and practices for transparent and reproducible research."],
-  ["JUN 2026", "Machine Learning with Python", "60-hour residential credit transfer program at L&T Skill Trainers Academy."],
-  ["MAY — JUN 2026", "Barclays Developer & Data Analytics", "Developer and Data Analytics programs through Springpod."],
-  ["2026", "Industry job simulations", "Software Engineering — JPMorgan Chase & Co.; Cybersecurity Analyst, Data Visualisation and GenAI-Powered Data Analytics — Tata Group; Data Analytics — Deloitte Australia."],
-  ["ONGOING", "Problem-solving practice", "Active LeetCode practitioner, continuously sharpening algorithmic thinking and implementation skills."],
-  ["JAN — APR 2025", "NPTEL Programming in Java — Elite", "92%; Top 1% among 16,040 certified candidates. NPTEL / IIT Kharagpur."]
-];
+.section-heading { display: flex; align-items: center; gap: 18px; margin-bottom: 58px; color: var(--dim); font: 9px var(--mono); letter-spacing: .16em; }
+.section-number { color: var(--lime); white-space: nowrap; }
+.section-rule { height: 1px; flex: 1; background: var(--line); }
+.section-side { white-space: nowrap; }
+.about-section { padding-top: 55px; padding-bottom: 140px; }
+.about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 8%; }
+.lime-text { color: var(--lime); }
+.about-statement h2,.work-intro h2,.stack-intro h2,.journey-heading h2,.credentials-title h2,.writing-intro h2 { margin-top: 18px; font: 700 clamp(43px,6vw,76px)/.99 var(--display); letter-spacing: -.07em; }
+.about-statement h2 em,.work-intro h2 em,.stack-intro h2 em,.journey-heading h2 em,.credentials-title h2 em,.writing-intro h2 em,.contact-panel h2 em { color: var(--lime); font-style: normal; }
+.outline-text { color: transparent; -webkit-text-stroke: 1px rgba(240,242,233,.5); }
+.about-copy { padding-top: 35px; max-width: 510px; }
+.about-copy p { color: var(--muted); font-size: 14px; margin-bottom: 18px; }
+.about-copy .about-lead { color: var(--text); font: 500 19px/1.55 var(--display); }
+.text-link { display: inline-flex; gap: 25px; color: var(--lime); font: 10px var(--mono); letter-spacing: .13em; border-bottom: 1px solid rgba(198,243,106,.4); padding: 12px 0 8px; margin-top: 10px; }
+.metric-grid { display: grid; grid-template-columns: repeat(4,1fr); margin-top: 95px; border: 1px solid var(--line); }
+.metric { min-height: 155px; padding: 25px; display: flex; flex-direction: column; border-right: 1px solid var(--line); }
+.metric:last-child { border-right: 0; }
+.metric strong { font: 700 clamp(36px,4vw,54px)/1 var(--display); letter-spacing: -.06em; color: var(--lime); }
+.metric-small { font-size: .55em; }
+.metric > span { margin-top: 13px; color: var(--text); font: 9px var(--mono); letter-spacing: .12em; }
+.metric small { margin-top: 5px; color: var(--dim); font-size: 11px; }
 
-const credentials = [
-  ["NOV 2026", "NASA Open Science Essentials", "Certificate of Achievement — NASA. Open science principles and practices for transparent, reproducible research."],
-  ["JUN 2026", "Machine Learning with Python", "60-hour residential credit transfer program — L&T Skill Trainers Academy."],
-  ["2026", "Software Engineering Job Simulation", "JPMorgan Chase & Co. — Forage."],
-  ["MAY–JUN 2026", "Developer & Data Analytics Programs", "Barclays — Springpod."],
-  ["2026", "Cybersecurity Analyst Simulation", "Tata Group — Forage."],
-  ["2026", "Data Visualisation Simulation", "Tata Group — Forage."],
-  ["2026", "GenAI-Powered Data Analytics Simulation", "Tata Group — Forage."],
-  ["2026", "Data Analytics Job Simulation", "Deloitte Australia — Forage."],
-  ["2026", "Introduction to Machine Learning", "Kaggle."],
-  ["2025", "Python Programming", "GeeksforGeeks."],
-  ["JAN–APR 2025", "Programming in Java — Elite Certificate", "NPTEL / IIT Kharagpur. 92%; Top 1% among 16,040 certified candidates."]
-];
+.work-section { padding-top: 40px; padding-bottom: 145px; }
+.work-intro,.stack-intro,.writing-intro { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 48px; }
+.work-intro h2,.stack-intro h2,.writing-intro h2 { margin: 0; font-size: clamp(48px,7vw,86px); }
+.work-intro p,.stack-intro p,.writing-intro p { max-width: 330px; color: var(--muted); font-size: 13px; padding-bottom: 8px; }
+.project-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 15px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 25px; }
+.filter-list { display: flex; flex-wrap: wrap; gap: 7px; }
+.filter-button { padding: 9px 12px; background: transparent; color: var(--dim); border: 1px solid transparent; cursor: pointer; font: 9px var(--mono); letter-spacing: .09em; transition: .2s; }
+.filter-button:hover { color: var(--text); }
+.filter-button.active { color: var(--lime); border-color: rgba(198,243,106,.38); background: rgba(198,243,106,.06); }
+.filter-button span { font-size: 8px; opacity: .7; margin-left: 5px; }
+.project-count { color: var(--dim); font: 9px var(--mono); white-space: nowrap; }
+.project-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+.project-card { position: relative; min-height: 300px; padding: 26px; background: linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012)); border: 1px solid var(--line); display: flex; flex-direction: column; overflow: hidden; transition: border-color .3s,transform .35s,background .3s; }
+.project-card::after { content: attr(data-index); position: absolute; right: 19px; top: 12px; color: rgba(240,242,233,.055); font: 800 90px/.9 var(--display); letter-spacing: -.1em; pointer-events: none; }
+.project-card:hover { border-color: rgba(198,243,106,.52); transform: translateY(-5px); background: linear-gradient(145deg,rgba(198,243,106,.065),rgba(255,255,255,.012)); }
+.project-card.featured { grid-column: span 2; min-height: 340px; background: radial-gradient(circle at 90% 10%,rgba(157,133,255,.13),transparent 36%),linear-gradient(145deg,#171d1e,#101416); }
+.project-meta { display: flex; align-items: center; gap: 9px; margin-bottom: 25px; position: relative; z-index: 1; }
+.project-tag { color: var(--lime); border: 1px solid rgba(198,243,106,.3); padding: 5px 8px; font: 8px var(--mono); letter-spacing: .1em; }
+.project-date { color: var(--dim); font: 9px var(--mono); }
+.project-card h3 { position: relative; z-index: 1; font: 700 clamp(23px,3vw,34px)/1.1 var(--display); letter-spacing: -.055em; margin-bottom: 13px; }
+.project-card.featured h3 { font-size: clamp(32px,4vw,48px); }
+.project-card p { position: relative; z-index: 1; max-width: 650px; color: var(--muted); font-size: 12px; line-height: 1.75; }
+.project-points { position: relative; z-index: 1; padding-left: 16px; margin: 5px 0 20px; color: var(--muted); font-size: 12px; }
+.project-points li { margin: 5px 0; padding-left: 3px; }
+.project-stack { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line); color: var(--dim); font: 9px/1.7 var(--mono); letter-spacing: .03em; }
+.project-footer { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 13px; }
+.project-link { color: var(--lime); font: 9px var(--mono); letter-spacing: .12em; }
+.project-link span { margin-left: 8px; transition: transform .2s; display: inline-block; }
+.project-link:hover span { transform: translate(3px,-3px); }
+.project-card[hidden] { display: none; }
 
-const writing = [
-  ["RESEARCH ARTICLE", "Devolution on Paper, Governance in Practice: The Local Self-Government Gap in Maharashtra", "17-page research article for the CAG–ICSSR Research Article Competition (2026)."],
-  ["TECHNICAL ARTICLE", "Where Does Our Data Go? — Exploring the Digital Data Lifecycle", "Technical article exploring the digital data lifecycle (2026)."],
-  ["LINKEDIN ARTICLE", "Why Still Wired? — Rethinking Wired vs. Wireless Infrastructure", "An exploration of wired and wireless infrastructure (2026)."],
-  ["LINKEDIN ARTICLE", "Can Prompting Secure a Career?", "An article on prompting and career readiness (2026)."]
-];
+.stack-section { padding-top: 40px; padding-bottom: 145px; }
+.stack-grid { display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.skill-card { padding: 24px; min-height: 185px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background .25s; }
+.skill-card:hover { background: rgba(198,243,106,.035); }
+.skill-card h3 { color: var(--lime); font: 600 17px var(--display); margin-bottom: 18px; }
+.skill-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.skill-chips span { padding: 6px 9px; border: 1px solid var(--line); color: var(--muted); font: 9px var(--mono); }
+.interests { display: grid; grid-template-columns: 190px 1fr; gap: 25px; padding: 25px 0; border-bottom: 1px solid var(--line); margin-top: 30px; }
+.interests > span { color: var(--dim); font: 9px var(--mono); letter-spacing: .12em; }
+.interests p { color: var(--muted); font-size: 12px; }
+.interests i { color: var(--lime); font-style: normal; padding: 0 7px; }
 
-const $ = (selector, root = document) => root.querySelector(selector);
-const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+.journey-section { padding-top: 35px; padding-bottom: 145px; }
+.journey-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 12%; }
+.journey-heading h2 { font-size: clamp(50px,6vw,76px); }
+.journey-heading p,.credentials-title p { color: var(--muted); font-size: 13px; max-width: 300px; margin-top: 25px; }
+.timeline { border-left: 1px solid var(--line-strong); padding-left: 32px; display: grid; gap: 33px; }
+.timeline-item { position: relative; }
+.timeline-item::before { content: ""; position: absolute; left: -38px; top: 7px; width: 11px; height: 11px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 5px rgba(198,243,106,.1); }
+.timeline-date { color: var(--lime); font: 9px var(--mono); letter-spacing: .12em; }
+.timeline-item h3 { font: 600 19px var(--display); margin: 8px 0 5px; }
+.timeline-item p { color: var(--muted); font-size: 12px; max-width: 560px; }
 
-function renderProjects(filter = "all") {
-  const visible = projects.filter(project => filter === "all" || project.category.includes(filter));
-  $("#projectGrid").innerHTML = visible.map((project, index) => `
-    <article class="project-card ${project.featured ? "featured" : ""}" data-index="${String(index + 1).padStart(2,"0")}">
-      <div class="project-meta"><span class="project-tag">${project.label}</span><span class="project-date">${project.date}</span></div>
-      <h3>${project.name}</h3>
-      <p>${project.description}</p>
-      ${project.points ? `<ul class="project-points">${project.points.map(point => `<li>${point}</li>`).join("")}</ul>` : ""}
-      <div class="project-stack">STACK / ${project.stack}</div>
-      <div class="project-footer"><a class="project-link" href="${GITHUB}" target="_blank" rel="noopener">EXPLORE ON GITHUB <span>↗</span></a></div>
-    </article>
-  `).join("");
-  $("#projectCount").textContent = `${visible.length} PROJECT${visible.length === 1 ? "" : "S"}`;
+.credentials-section { padding-top: 35px; padding-bottom: 145px; }
+.credentials-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 12%; }
+.credentials-title h2 { font-size: clamp(45px,5.6vw,70px); }
+.credential-list { border-top: 1px solid var(--line); }
+.credential-item { display: grid; grid-template-columns: 95px 1fr; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.credential-year { color: var(--lime); font: 9px var(--mono); padding-top: 4px; }
+.credential-item h3 { font: 600 15px var(--display); }
+.credential-item p { color: var(--muted); font-size: 11px; margin-top: 5px; }
+
+.writing-section { padding-top: 35px; padding-bottom: 145px; }
+.writing-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+.writing-card { padding: 23px; border: 1px solid var(--line); min-height: 160px; position: relative; transition: border-color .25s,transform .25s; }
+.writing-card:hover { border-color: rgba(198,243,106,.5); transform: translateY(-3px); }
+.writing-card > span { color: var(--lime); font: 9px var(--mono); letter-spacing: .12em; }
+.writing-card h3 { font: 600 19px/1.3 var(--display); margin: 17px 0 8px; }
+.writing-card p { color: var(--muted); font-size: 11px; }
+.writing-card .writing-note { color: var(--dim); font: 8px var(--mono); margin-top: 14px; }
+
+.education-section { padding-top: 35px; padding-bottom: 145px; }
+.education-card { display: grid; grid-template-columns: 1.2fr .8fr; gap: 30px; padding: 35px; border: 1px solid var(--line); background: radial-gradient(circle at 100% 0,rgba(198,243,106,.08),transparent 40%),var(--panel); }
+.education-card h2 { font: 700 clamp(32px,4vw,48px)/1.02 var(--display); letter-spacing: -.06em; margin: 16px 0 10px; }
+.education-card p { color: var(--muted); font-size: 12px; margin-bottom: 22px; }
+.education-card strong { color: var(--lime); font: 10px var(--mono); letter-spacing: .1em; }
+.education-results { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.education-results div { background: rgba(255,255,255,.035); padding: 14px; display: flex; flex-direction: column; justify-content: space-between; min-height: 90px; }
+.education-results span { color: var(--dim); font: 8px var(--mono); letter-spacing: .1em; }
+.education-results b { color: var(--lime); font: 700 27px var(--display); }
+.school-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.school-grid article { padding: 22px; border: 1px solid var(--line); }
+.school-grid span { color: var(--dim); font: 9px var(--mono); }
+.school-grid h3 { color: var(--lime); font: 700 32px var(--display); margin: 8px 0; }
+.school-grid p { color: var(--muted); font-size: 11px; }
+.coursework { display: grid; grid-template-columns: 190px 1fr; gap: 25px; padding: 25px 0; margin-top: 15px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.coursework span { color: var(--dim); font: 9px var(--mono); letter-spacing: .12em; }
+.coursework p { color: var(--muted); font-size: 12px; }
+
+.contact-section { padding-top: 20px; padding-bottom: 80px; }
+.contact-panel { min-height: 430px; padding: clamp(28px,6vw,75px); position: relative; overflow: hidden; background: var(--lime); color: var(--bg); }
+.contact-panel .eyebrow { color: rgba(9,11,13,.65); }
+.contact-panel h2 { position: relative; z-index: 1; font: 800 clamp(52px,8vw,100px)/.92 var(--display); letter-spacing: -.08em; margin: 24px 0; }
+.contact-panel h2 em { color: #566b2c; }
+.contact-panel > p { position: relative; z-index: 1; max-width: 470px; font-size: 13px; color: rgba(9,11,13,.72); }
+.contact-email { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 25px; margin-top: 28px; padding-bottom: 8px; border-bottom: 1px solid rgba(9,11,13,.45); font: 600 clamp(14px,2vw,20px) var(--display); }
+.contact-links { display: flex; flex-wrap: wrap; gap: 25px; margin-top: 40px; position: relative; z-index: 1; }
+.contact-links a,.contact-location { color: rgba(9,11,13,.7); font: 9px var(--mono); letter-spacing: .1em; }
+.contact-links a:hover { color: var(--bg); }
+.contact-location { display: block; margin-top: 20px; color: rgba(9,11,13,.5); }
+.contact-orb { position: absolute; width: 360px; height: 360px; border-radius: 50%; border: 1px solid rgba(9,11,13,.18); right: -50px; top: -110px; box-shadow: 0 0 0 40px rgba(9,11,13,.035),0 0 0 80px rgba(9,11,13,.025); }
+
+.site-footer { min-height: 100px; padding: 25px var(--gutter); border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.site-footer p,.site-footer > span,.back-top { color: var(--dim); font: 8px var(--mono); letter-spacing: .12em; }
+.back-top { color: var(--lime); }
+.reveal { opacity: 1; transform: none; }
+.js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .75s ease,transform .75s cubic-bezier(.2,.7,.2,1); }
+.js .reveal.visible { opacity: 1; transform: none; }
+.project-card, .skill-card, .writing-card { animation: card-in .5s both; }
+@keyframes card-in { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: none; } }
+
+@media (min-width: 1500px) { .hero-name { font-size: 170px; } }
+@media (max-width: 900px) {
+  .hero { min-height: auto; padding-top: 125px; }
+  .hero-layout { grid-template-columns: 1fr .72fr; gap: 10px; }
+  .hero-name { font-size: clamp(65px,10vw,105px); }
+  .hero-visual { min-height: 360px; }
+  .portrait-frame { width: min(270px,78%); }
+  .orbit-one { width: 340px; } .orbit-two { width: 320px; height: 270px; }
+  .metric { padding: 18px; }
+  .journey-layout,.credentials-layout { gap: 7%; }
+}
+@media (max-width: 700px) {
+  :root { --gutter: 22px; }
+  .site-header { height: 68px; }
+  .menu-toggle { display: block; }
+  .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(3.5px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+  .nav-links { position: fixed; inset: 68px 0 auto; padding: 25px var(--gutter) 32px; display: flex; flex-direction: column; align-items: flex-start; gap: 22px; background: rgba(9,11,13,.97); border-bottom: 1px solid var(--line); transform: translateY(-150%); opacity: 0; transition: transform .35s,opacity .35s; }
+  .nav-links.open { transform: translateY(0); opacity: 1; }
+  .nav-links a { font-size: 12px; }
+  .hero { padding-top: 105px; min-height: 0; }
+  .hero-topline { font-size: 8px; }
+  .hero-index { display: none; }
+  .hero-layout { grid-template-columns: 1fr; padding-top: 50px; }
+  .hero-name { font-size: clamp(72px,16vw,120px); }
+  .hero-visual { min-height: 390px; margin-top: 10px; }
+  .portrait-frame { width: 245px; }
+  .visual-stamp { right: 8%; }
+  .hero-bottom { padding-top: 10px; }
+  .ticker { margin: 35px 0 75px; }
+  .section-heading { margin-bottom: 38px; gap: 10px; font-size: 8px; }
+  .section-side { display: none; }
+  .about-section,.work-section,.stack-section,.journey-section,.credentials-section,.writing-section,.education-section { padding-bottom: 95px; }
+  .about-grid,.journey-layout,.credentials-layout { grid-template-columns: 1fr; gap: 28px; }
+  .about-copy { padding-top: 0; }
+  .metric-grid { grid-template-columns: 1fr 1fr; margin-top: 50px; }
+  .metric:nth-child(2) { border-right: 0; }
+  .metric:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .work-intro,.stack-intro,.writing-intro { display: block; }
+  .work-intro p,.stack-intro p,.writing-intro p { margin-top: 16px; }
+  .project-toolbar { align-items: flex-start; flex-direction: column; }
+  .project-grid { grid-template-columns: 1fr; }
+  .project-card.featured { grid-column: auto; }
+  .stack-grid { grid-template-columns: 1fr 1fr; }
+  .skill-card { padding: 18px; min-height: 170px; }
+  .interests,.coursework { grid-template-columns: 1fr; gap: 10px; }
+  .timeline { margin-left: 5px; }
+  .credentials-title { margin-bottom: 20px; }
+  .writing-grid { grid-template-columns: 1fr; }
+  .education-card { grid-template-columns: 1fr; padding: 24px; }
+  .education-results { grid-template-columns: 1fr 1fr; }
+  .school-grid { grid-template-columns: 1fr; }
+  .contact-panel { padding: 35px 24px; }
+  .contact-panel h2 { font-size: clamp(51px,12vw,78px); }
+  .site-footer { flex-wrap: wrap; }
+  .site-footer p { order: 3; width: 100%; }
+}
+@media (max-width: 390px) {
+  .hero-name { font-size: 65px; }
+  .hero-socials { gap: 15px; }
+  .stack-grid { grid-template-columns: 1fr; }
+  .credential-item { grid-template-columns: 70px 1fr; gap: 12px; }
+  .project-card { padding: 21px; }
+}
+@media (hover: none) { .cursor-aura { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .js .reveal { opacity: 1; transform: none; }
+  .ticker-track { animation: none; }
 }
 
-function renderSkills() {
-  $("#skillGrid").innerHTML = Object.entries(skills).map(([category, items]) => `
-    <article class="skill-card"><h3>${category}</h3><div class="skill-chips">${items.map(item => `<span>${item}</span>`).join("")}</div></article>
-  `).join("");
-}
+.portrait-fallback { width: 100%; height: calc(100% - 37px); display: grid; place-items: center; background: var(--panel-2); color: var(--lime); font: 800 72px var(--display); }
+.portrait-fallback[hidden] { display: none; }
 
-function renderTimeline() {
-  $("#timeline").innerHTML = journey.map(([date, title, detail]) => `
-    <article class="timeline-item"><span class="timeline-date">${date}</span><h3>${title}</h3><p>${detail}</p></article>
-  `).join("");
-}
 
-function renderCredentials() {
-  $("#credentialList").innerHTML = credentials.map(([date, title, detail]) => `
-    <article class="credential-item"><span class="credential-year">${date}</span><div><h3>${title}</h3><p>${detail}</p></div></article>
-  `).join("");
-}
+/* V4 HERO RECOMPOSITION — name first, portrait immediately after */
+.hero { min-height: auto; padding-top: 112px; padding-bottom: 28px; justify-content: flex-start; }
+.hero-layout { display: block; padding: 42px 0 24px; }
+.hero-copy { display: contents; }
+.hero-kicker { margin-bottom: 14px; }
+.hero-name { font-size: clamp(58px, 8.2vw, 116px); line-height: .88; letter-spacing: -.085em; max-width: 1100px; }
+.hero-name > span { display: inline; }
+.hero-name > span + span { margin-left: .18em; }
+.hero-visual { min-height: 0; height: clamp(300px, 38vw, 430px); width: 100%; margin: 24px 0 18px; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+.portrait-frame { width: clamp(260px, 29vw, 390px); height: min(100%, 410px); aspect-ratio: auto; padding: 10px; transform: rotate(1.5deg); box-shadow: 18px 18px 0 rgba(198,243,106,.10); }
+.portrait { width: 100%; height: calc(100% - 36px); object-fit: cover; object-position: 50% 22%; }
+.portrait-topline,.portrait-bottomline { height: 18px; }
+.visual-orbit.orbit-one { width: min(700px, 70vw); height: 220px; }
+.visual-orbit.orbit-two { width: min(620px, 65vw); height: 330px; }
+.role-line { margin: 12px 0 12px; }
+.hero-description { max-width: 720px; }
+.hero-actions { margin-top: 22px; }
+.hero-bottom { margin-top: 22px; }
 
-function renderWriting() {
-  $("#writingGrid").innerHTML = writing.map(([type, title, detail]) => `
-    <article class="writing-card"><span>${type}</span><h3>${title}</h3><p>${detail}</p><div class="writing-note">2026 · JAY KELUSKAR</div></article>
-  `).join("");
-}
+/* Keep every selected project in the same consistent two-column card system. */
+.project-card.featured { grid-column: auto; min-height: 300px; background: linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012)); }
+.project-card.featured h3 { font-size: clamp(23px,3vw,34px); }
 
-function setupFilters() {
-  $("#projectFilters").addEventListener("click", event => {
-    const button = event.target.closest("[data-filter]");
-    if (!button) return;
-    $$(".filter-button").forEach(item => {
-      const active = item === button;
-      item.classList.toggle("active", active);
-      item.setAttribute("aria-pressed", String(active));
-    });
-    renderProjects(button.dataset.filter);
-  });
+@media (min-width: 1100px) {
+  .hero { padding-top: 112px; }
+  .hero-layout { padding-top: 36px; }
+  .hero-visual { height: 400px; }
 }
-
-function setupTyping() {
-  const target = $("#typedRole");
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    target.textContent = roles[0];
-    return;
-  }
-  let word = 0, char = 0, deleting = false;
-  function tick() {
-    const current = roles[word];
-    target.textContent = current.slice(0, char);
-    if (!deleting && char === current.length) {
-      deleting = true;
-      setTimeout(tick, 1350);
-      return;
-    }
-    if (deleting && char === 0) {
-      deleting = false;
-      word = (word + 1) % roles.length;
-    }
-    char += deleting ? -1 : 1;
-    setTimeout(tick, deleting ? 38 : 78);
-  }
-  tick();
+@media (max-width: 760px) {
+  .hero { padding-top: 100px; }
+  .hero-layout { padding-top: 30px; }
+  .hero-name { font-size: clamp(48px, 12vw, 76px); line-height: .94; }
+  .hero-name > span { display: block; }
+  .hero-name > span + span { margin-left: 0; }
+  .hero-visual { height: 330px; margin: 18px 0 14px; }
+  .portrait-frame { width: min(270px, 76vw); height: 310px; }
+  .visual-orbit.orbit-one { width: 110vw; height: 150px; }
+  .visual-orbit.orbit-two { width: 100vw; height: 250px; }
+  .project-grid { grid-template-columns: 1fr; }
+  .project-card.featured { grid-column: auto; }
 }
-
-function setupReveal() {
-  const elements = $$(".reveal");
-  if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    elements.forEach(element => element.classList.add("visible"));
-    return;
-  }
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add("visible");
-      observer.unobserve(entry.target);
-    });
-  }, { threshold: .12 });
-  elements.forEach(element => observer.observe(element));
-}
-
-function setupNavigation() {
-  const header = $(".site-header");
-  const menu = $("#menuToggle");
-  const nav = $("#navLinks");
-  const closeMenu = () => {
-    nav.classList.remove("open");
-    menu.setAttribute("aria-expanded", "false");
-    menu.setAttribute("aria-label", "Open navigation");
-    document.body.classList.remove("menu-open");
-  };
-  menu.addEventListener("click", () => {
-    const expanded = menu.getAttribute("aria-expanded") === "true";
-    menu.setAttribute("aria-expanded", String(!expanded));
-    menu.setAttribute("aria-label", expanded ? "Open navigation" : "Close navigation");
-    nav.classList.toggle("open", !expanded);
-    document.body.classList.toggle("menu-open", !expanded);
-  });
-  nav.addEventListener("click", event => {
-    if (event.target.closest("a")) closeMenu();
-  });
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 700) closeMenu();
-  });
-  const updateScroll = () => {
-    const doc = document.documentElement;
-    const max = doc.scrollHeight - doc.clientHeight;
-    $("#scrollProgress").style.width = `${max > 0 ? (doc.scrollTop / max) * 100 : 0}%`;
-    header.classList.toggle("scrolled", window.scrollY > 24);
-  };
-  window.addEventListener("scroll", updateScroll, { passive: true });
-  updateScroll();
-}
-
-function setupCursorAura() {
-  const aura = $(".cursor-aura");
-  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-  let raf = 0;
-  window.addEventListener("pointermove", event => {
-    if (raf) cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(() => {
-      aura.style.left = `${event.clientX}px`;
-      aura.style.top = `${event.clientY}px`;
-    });
-  }, { passive: true });
-}
-
-function setupParticleField() {
-  const canvas = $("#particle-field");
-  const ctx = canvas.getContext("2d");
-  if (!ctx || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  let width = 0, height = 0, particles = [], frame = 0;
-  const pointer = { x: -1000, y: -1000 };
-  const resize = () => {
-    const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = Math.floor(width * ratio);
-    canvas.height = Math.floor(height * ratio);
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-    const count = Math.min(48, Math.floor(width * height / 24000));
-    particles = Array.from({ length: count }, () => ({
-      x: Math.random() * width, y: Math.random() * height,
-      vx: (Math.random() - .5) * .22, vy: (Math.random() - .5) * .22
-    }));
-  };
-  const move = event => { pointer.x = event.clientX; pointer.y = event.clientY; };
-  const draw = () => {
-    ctx.clearRect(0, 0, width, height);
-    particles.forEach((particle, index) => {
-      particle.x += particle.vx;
-      particle.y += particle.vy;
-      if (particle.x < 0 || particle.x > width) particle.vx *= -1;
-      if (particle.y < 0 || particle.y > height) particle.vy *= -1;
-      const dx = particle.x - pointer.x, dy = particle.y - pointer.y;
-      const distance = Math.hypot(dx, dy);
-      if (distance < 130 && distance > 0) {
-        particle.x += dx / distance * .22;
-        particle.y += dy / distance * .22;
-      }
-      ctx.fillStyle = "rgba(198,243,106,.48)";
-      ctx.beginPath(); ctx.arc(particle.x, particle.y, 1.25, 0, Math.PI * 2); ctx.fill();
-      for (let next = index + 1; next < particles.length; next++) {
-        const other = particles[next];
-        const gap = Math.hypot(particle.x - other.x, particle.y - other.y);
-        if (gap < 115) {
-          ctx.strokeStyle = `rgba(157,133,255,${.13 * (1 - gap / 115)})`;
-          ctx.lineWidth = .7;
-          ctx.beginPath(); ctx.moveTo(particle.x, particle.y); ctx.lineTo(other.x, other.y); ctx.stroke();
-        }
-      }
-    });
-    frame = requestAnimationFrame(draw);
-  };
-  resize();
-  window.addEventListener("resize", resize, { passive: true });
-  window.addEventListener("pointermove", move, { passive: true });
-  draw();
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) cancelAnimationFrame(frame);
-    else draw();
-  });
-}
-
-function init() {
-  renderProjects();
-  renderSkills();
-  renderTimeline();
-  renderCredentials();
-  renderWriting();
-  setupFilters();
-  setupTyping();
-  setupReveal();
-  setupNavigation();
-  setupCursorAura();
-  setupParticleField();
-  $("#year").textContent = new Date().getFullYear();
-  window.addEventListener("load", () => {
-    setTimeout(() => $("#preloader").classList.add("done"), 450);
-  });
-  setTimeout(() => $("#preloader")?.classList.add("done"), 1800);
-}
-
-init();
