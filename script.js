@@ -1,156 +1,102 @@
-/* ========= EDIT YOUR CONTENT HERE ========= */
-const GH = "https://github.com/Jayz-yuors";
-const roles = ["AI/ML Engineer", "Full-Stack Developer", "Federated Learning Explorer", "Problem Solver"];
+:root{--bg:#070b16;--panel:#0f1629;--line:#1e2a47;--text:#e8edf8;--mute:#93a0bd;--a:#22d3ee;--b:#8b5cf6;--grad:linear-gradient(120deg,var(--a),var(--b))}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--bg);color:var(--text);font:400 1rem/1.7 Inter,system-ui,sans-serif;overflow-x:hidden}
+h1,h2,h3,.logo{font-family:'Space Grotesk',sans-serif}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--a);outline-offset:3px}
+#net{position:fixed;inset:0;z-index:-2;width:100%;height:100%}
+#glow{position:fixed;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:-1;background:radial-gradient(circle,rgba(34,211,238,.13),transparent 65%);transform:translate(-50%,-50%);left:50%;top:30%}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:100}
+#loader{position:fixed;inset:0;background:var(--bg);display:grid;place-content:center;justify-items:center;gap:1rem;z-index:200;transition:opacity .6s,visibility .6s;color:var(--mute)}
+#loader.done{opacity:0;visibility:hidden}
+.ring{width:54px;height:54px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--a);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-const skills = {
-  "Languages": ["Python", "Java", "C", "SQL", "MySQL", "HTML", "CSS"],
-  "ML / AI": ["Supervised Learning", "Federated Learning", "Differential Privacy", "Reinforcement Learning", "NLP (LSTM)", "Explainable AI (TreeSHAP)", "Computer Vision"],
-  "Frameworks": ["PyTorch", "Scikit-learn", "XGBoost", "LightGBM", "Stable-Baselines3", "Gymnasium", "ONNX Runtime", "OpenCV"],
-  "Backend & Data": ["Spring Boot", "FastAPI", "React", "REST APIs", "PostgreSQL", "Neo4j", "SQLite"],
-  "Tools": ["Git", "GitHub", "N8N", "Google Earth Engine", "NASA Open APIs", "Gemini API", "Jupyter"]
-};
+#nav{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:.9rem 6vw;z-index:50;transition:background .3s,backdrop-filter .3s}
+#nav.solid{background:rgba(7,11,22,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.logo{font-weight:700;font-size:1.3rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+#links{display:flex;gap:1.6rem;align-items:center}
+#links a{color:var(--mute);font-size:.95rem;transition:color .25s}
+#links a:hover,#links a.active{color:var(--a)}
+#burger{display:none;background:none;border:0;color:var(--text);font-size:1.6rem;cursor:pointer}
 
-// cat: ai | web | rl ; add  repo: "https://github.com/Jayz-yuors/<repo>"  to show a Code link
-const projects = [
-  { name: "SentinelAI", cat: ["ai", "web"], badge: "2026 - Present", tech: "React, Spring Boot, FastAPI, PostgreSQL, Neo4j",
-    pts: ["End-to-end security-aware CI/CD pipeline: code review, risk assessment, remediation and verification.", "Multi-service workflow with AI-provider fallback and structured evidence logging.", "Automates branches, commits and pull requests on GitHub."] },
-  { name: "QuantCopilot AI", cat: ["ai", "web"], badge: "2026 - Present", tech: "Python, FastAPI, React, PostgreSQL, N8N, Gemini",
-    pts: ["Analyses 42 assets with RSI, MACD, ATR, EMA and SMA indicators.", "ML regime classifier (Bull / Bear / High Volatility) with automated daily AI reports.", "Pipeline over 117K+ price, 117K+ indicator and 235K+ regime records."] },
-  { name: "TrustFed", cat: ["ai"], badge: "ENIGMA 5.0 Finalist", tech: "Federated Learning, ONNX Runtime, TreeSHAP",
-    pts: ["Collaborative fraud detection across mobile money, lending and insurance data.", "SecAgg+ aggregation and differential privacy, no raw data pooling.", "FP16 ONNX inference with TreeSHAP and Gemini audit rationales."] },
-  { name: "Urban Heat Prediction", cat: ["ai"], badge: "Team project", tech: "Python, Google Earth Engine, XGBoost",
-    pts: ["46-factor geospatial dataset to predict Landsat land surface temperature.", "Region-wise pipelines comparing 5 models with city-held-out validation.", "New-city inference via nearest environmentally similar city."] },
-  { name: "Rocket Landing with RL", cat: ["rl"], badge: "In progress", tech: "Gymnasium, Stable-Baselines3, PyTorch",
-    pts: ["RL pipeline on LunarLander-v3 with reward shaping.", "Episode logging and replay workflows to analyse landing trajectories."] },
-  { name: "TruthLens", cat: ["ai"], badge: "2026", tech: "LSTM, NLP, N8N, NewsAPI",
-    pts: ["Hybrid fake-news verifier: LSTM classifier plus live NewsAPI evidence check.", "Returns a verdict with a confidence score."] },
-  { name: "Football Analytics System", cat: ["rl"], badge: "Computer Vision", tech: "OpenCV, YOLO, Video Analysis",
-    pts: ["Highlights analyser with player heatmaps and minimap tactical views.", "Uses contour detection, optical flow and homography."] }
-];
-const filters = [["all", "All"], ["ai", "AI / ML"], ["web", "Full-Stack"], ["rl", "RL & Vision"]];
+.btn{display:inline-block;padding:.8rem 1.5rem;border-radius:10px;background:var(--grad);color:#04101a!important;font-weight:600;transition:transform .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(34,211,238,.25)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)!important}
+.btn.ghost:hover{border-color:var(--a)}
+.btn.small{padding:.45rem 1rem}
 
-const journey = [
-  ["Sep 2024 - Present", "B.Tech Computer Engineering, VIT Mumbai", "CGPA 9.7/10 overall (9.86 in Sem 4)."],
-  ["Nov 2026", "NASA Open Science Essentials", "Certificate of Achievement from NASA."],
-  ["Jun 2026", "Machine Learning with Python", "60-hour residential program, L&T Skill Trainers Academy."],
-  ["2026", "Industry simulations", "JPMorgan, Barclays, Deloitte and Tata (software, data, cybersecurity)."],
-  ["Jan - Apr 2025", "NPTEL Java Elite", "92%, top 1% among 16,040 certified candidates."]
-];
-const writing = [
-  ["Devolution on Paper, Governance in Practice", "17-page research article for the CAG-ICSSR Research Article Competition (2026) on the local self-government gap in Maharashtra."],
-  ["Where Does Our Data Go?", "Technical article exploring the digital data lifecycle."],
-  ["Why Still Wired?", "LinkedIn article rethinking wired vs. wireless infrastructure."],
-  ["Can Prompting Secure a Career?", "LinkedIn article on prompting and career readiness."]
-];
-/* ========= END CONTENT ========= */
+section{padding:6.5rem 6vw 2rem;max-width:1200px;margin:auto}
+.hero{min-height:100vh;display:grid;grid-template-columns:1.2fr .8fr;gap:3rem;align-items:center;padding-top:7rem}
+.hello{color:var(--a);font-weight:500}
+h1{font-size:clamp(2.8rem,7vw,5rem);line-height:1.05;margin:.3rem 0}
+h2{font-size:clamp(1.3rem,3vw,2rem);color:var(--mute);min-height:2.6rem;font-weight:500}
+#typed{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700}
+.caret{display:inline-block;width:3px;height:1.2em;background:var(--a);margin-left:4px;vertical-align:middle;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.lead{max-width:60ch;color:var(--mute);margin:1rem 0 1.6rem}
+.lead.center{margin-inline:auto;text-align:center}
+.cta{display:flex;flex-wrap:wrap;gap:1rem}.cta.center{justify-content:center}
+.socials{display:flex;gap:1.4rem;margin-top:1.6rem}
+.socials a{color:var(--mute);border-bottom:1px solid var(--line);transition:.25s}
+.socials a:hover{color:var(--a);border-color:var(--a)}
+.hero-text>*{opacity:0;transform:translateY(24px);animation:rise .8s forwards}
+.hero-text>*:nth-child(2){animation-delay:.15s}.hero-text>*:nth-child(3){animation-delay:.3s}.hero-text>*:nth-child(4){animation-delay:.45s}.hero-text>*:nth-child(5){animation-delay:.6s}.hero-text>*:nth-child(6){animation-delay:.75s}
+body.loading .hero-text>*{animation-play-state:paused}
+@keyframes rise{to{opacity:1;transform:none}}
+.hero-photo{position:relative;justify-self:center;width:min(340px,80vw);aspect-ratio:1;transition:transform .15s;transform-style:preserve-3d}
+.hero-photo img{position:relative;width:100%;height:100%;object-fit:cover;object-position:50% 20%;border-radius:28% 72% 63% 37%/41% 38% 62% 59%;border:2px solid var(--line);animation:morph 9s ease-in-out infinite}
+.halo{position:absolute;inset:-14px;background:var(--grad);filter:blur(34px);opacity:.45;border-radius:50%;animation:spin 14s linear infinite}
+@keyframes morph{50%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%}}
 
-const $ = (s, r = document) => r.querySelector(s);
-document.body.classList.add("loading");
-window.addEventListener("load", () => setTimeout(() => { $("#loader").classList.add("done"); document.body.classList.remove("loading"); }, 700));
+.title{font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:2rem;display:flex;align-items:center;gap:1rem}
+.title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.about{display:grid;grid-template-columns:1.1fr .9fr;gap:2.5rem;align-items:center}
+.about p{color:var(--mute)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.stats div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.2rem}
+.stats b{font:700 2rem 'Space Grotesk';background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;display:block}
+.stats span{color:var(--mute);font-size:.88rem}
 
-// Render content
-$("#skillGrid").innerHTML = Object.entries(skills).map(([k, v]) =>
-  `<div class="skill"><h4>${k}</h4><div class="chips">${v.map(x => `<span>${x}</span>`).join("")}</div></div>`).join("");
-$("#timeline").innerHTML = journey.map(([d, t, p]) => `<div class="t-item"><small>${d}</small><h4>${t}</h4><p>${p}</p></div>`).join("");
-$("#writeGrid").innerHTML = writing.map(([t, p]) => `<div class="card"><h4>${t}</h4><p>${p}</p></div>`).join("");
-$("#filters").innerHTML = filters.map(([k, l], i) => `<button data-f="${k}" class="${i ? "" : "on"}">${l}</button>`).join("");
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.2rem}
+.skill{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.3rem;transition:border-color .3s,transform .3s}
+.skill:hover{border-color:var(--a);transform:translateY(-4px)}
+.skill h4{margin-bottom:.8rem;font-family:'Space Grotesk'}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem}
+.chips span{font-size:.82rem;padding:.25rem .7rem;border-radius:99px;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3);color:#cdbbff}
 
-function drawProjects(f = "all") {
-  $("#projectGrid").innerHTML = projects.filter(p => f === "all" || p.cat.includes(f)).map((p, i) =>
-    `<article class="card tilt" style="animation-delay:${i * 70}ms"><span class="badge">${p.badge}</span><h4>${p.name}</h4>
-     <ul>${p.pts.map(x => `<li>${x}</li>`).join("")}</ul><p><b>Stack:</b> ${p.tech}</p>
-     <div class="links"><a href="${p.repo || GH}" target="_blank" rel="noopener">${p.repo ? "View code" : "GitHub profile"}</a></div></article>`).join("");
-  bindTilt();
+.filters{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.6rem}
+.filters button{background:var(--panel);color:var(--mute);border:1px solid var(--line);padding:.45rem 1.1rem;border-radius:99px;cursor:pointer;font:inherit;transition:.25s}
+.filters button.on,.filters button:hover{color:#04101a;background:var(--a);border-color:var(--a)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.3rem}
+.grid.two{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.5rem;display:flex;flex-direction:column;gap:.8rem;position:relative;overflow:hidden;transition:transform .2s,border-color .3s,opacity .4s;animation:pop .5s both}
+.card::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.card:hover{border-color:var(--a)}.card:hover::before{transform:scaleX(1)}
+@keyframes pop{from{opacity:0;transform:scale(.94) translateY(16px)}}
+.card h4{font:700 1.2rem 'Space Grotesk'}
+.card p,.card li{color:var(--mute);font-size:.93rem}
+.card ul{padding-left:1.1rem;display:grid;gap:.3rem}
+.card .links{margin-top:auto;display:flex;gap:1rem}
+.card .links a{color:var(--a);font-size:.9rem}
+.badge{align-self:flex-start;font-size:.75rem;padding:.2rem .7rem;border-radius:99px;background:rgba(34,211,238,.12);color:var(--a)}
+
+.timeline{border-left:2px solid var(--line);margin-left:.5rem;display:grid;gap:1.6rem}
+.t-item{position:relative;padding-left:1.8rem}
+.t-item::before{content:"";position:absolute;left:-7px;top:.5rem;width:12px;height:12px;border-radius:50%;background:var(--a);box-shadow:0 0 0 5px rgba(34,211,238,.15)}
+.t-item small{color:var(--a)}.t-item h4{font-family:'Space Grotesk'}.t-item p{color:var(--mute);font-size:.93rem}
+
+.reveal{opacity:0;transform:translateY(40px);filter:blur(6px);transition:opacity .9s,transform .9s,filter .9s}
+.reveal.in{opacity:1;transform:none;filter:none}
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding:3rem 6vw;margin-top:5rem;border-top:1px solid var(--line);color:var(--mute)}
+footer a:hover{color:var(--a)}
+
+@media(max-width:820px){
+ .hero,.about{grid-template-columns:1fr}.hero-photo{order:-1;width:min(240px,60vw)}
+ #burger{display:block}
+ #links{position:fixed;top:60px;right:0;left:0;flex-direction:column;background:var(--panel);padding:1.5rem;gap:1rem;transform:translateY(-130%);transition:transform .4s;border-bottom:1px solid var(--line)}
+ #links.open{transform:none}
 }
-$("#filters").addEventListener("click", e => {
-  const b = e.target.closest("button"); if (!b) return;
-  document.querySelectorAll("#filters button").forEach(x => x.classList.remove("on"));
-  b.classList.add("on"); drawProjects(b.dataset.f);
-});
-
-// Typed roles
-let ri = 0, ci = 0, del = false;
-(function type() {
-  const w = roles[ri];
-  $("#typed").textContent = w.slice(0, ci);
-  if (!del && ci === w.length) { del = true; return setTimeout(type, 1400); }
-  if (del && ci === 0) { del = false; ri = (ri + 1) % roles.length; }
-  ci += del ? -1 : 1;
-  setTimeout(type, del ? 35 : 80);
-})();
-
-// Tilt effect
-function bindTilt() {
-  document.querySelectorAll(".tilt").forEach(el => {
-    if (el.dataset.t) return; el.dataset.t = 1;
-    el.addEventListener("mousemove", e => {
-      const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-      el.style.transform = `perspective(800px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
-    });
-    el.addEventListener("mouseleave", () => el.style.transform = "");
-  });
-}
-
-// Scroll: reveal, counters, progress, nav state
-const counted = new WeakSet();
-const io = new IntersectionObserver(es => es.forEach(e => {
-  if (!e.isIntersecting) return;
-  e.target.classList.add("in");
-  e.target.querySelectorAll("[data-count]").forEach(n => {
-    if (counted.has(n)) return; counted.add(n);
-    const to = +n.dataset.count, dec = +n.dataset.dec || 0, t0 = performance.now();
-    (function step(t) {
-      const k = Math.min((t - t0) / 1400, 1), v = to * (1 - Math.pow(1 - k, 3));
-      n.textContent = (n.dataset.pre || "") + v.toFixed(dec) + (n.dataset.suf || "");
-      if (k < 1) requestAnimationFrame(step);
-    })(t0);
-  });
-}), { threshold: .15 });
-document.querySelectorAll(".reveal").forEach(s => io.observe(s));
-
-const secs = [...document.querySelectorAll("main section[id]")], navLinks = [...document.querySelectorAll("#links a[href^='#']")];
-addEventListener("scroll", () => {
-  const h = document.documentElement;
-  $("#progress").style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100 + "%";
-  $("#nav").classList.toggle("solid", scrollY > 30);
-  const cur = secs.filter(s => s.offsetTop - 140 <= scrollY).pop();
-  navLinks.forEach(a => a.classList.toggle("active", cur && a.getAttribute("href") === "#" + cur.id));
-}, { passive: true });
-
-// Mobile menu
-$("#burger").onclick = () => $("#links").classList.toggle("open");
-$("#links").addEventListener("click", e => e.target.tagName === "A" && $("#links").classList.remove("open"));
-
-// Cursor glow
-addEventListener("mousemove", e => { const g = $("#glow"); g.style.left = e.clientX + "px"; g.style.top = e.clientY + "px"; });
-
-// Neural network canvas background
-(function () {
-  const c = $("#net"), x = c.getContext("2d"), m = { x: -999, y: -999 };
-  let W, H, pts;
-  const init = () => {
-    W = c.width = innerWidth; H = c.height = innerHeight;
-    pts = Array.from({ length: Math.min(90, Math.floor(W * H / 16000)) }, () => ({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .5, vy: (Math.random() - .5) * .5 }));
-  };
-  addEventListener("resize", init);
-  addEventListener("mousemove", e => { m.x = e.clientX; m.y = e.clientY; });
-  (function frame() {
-    x.clearRect(0, 0, W, H);
-    pts.forEach((p, i) => {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
-      const dm = Math.hypot(p.x - m.x, p.y - m.y);
-      if (dm < 150) { p.x += (m.x - p.x) * .008; p.y += (m.y - p.y) * .008; }
-      x.fillStyle = "rgba(34,211,238,.7)"; x.beginPath(); x.arc(p.x, p.y, 1.8, 0, 7); x.fill();
-      for (let j = i + 1; j < pts.length; j++) {
-        const d = Math.hypot(p.x - pts[j].x, p.y - pts[j].y);
-        if (d < 130) { x.strokeStyle = `rgba(139,92,246,${.35 * (1 - d / 130)})`; x.beginPath(); x.moveTo(p.x, p.y); x.lineTo(pts[j].x, pts[j].y); x.stroke(); }
-      }
-    });
-    requestAnimationFrame(frame);
-  })();
-  init();
-})();
-
-drawProjects();
-bindTilt();
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none;filter:none}}
+.sub{font:700 1.3rem 'Space Grotesk',sans-serif;margin:3rem 0 1.2rem;color:var(--mute)}
